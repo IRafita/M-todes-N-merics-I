@@ -13,7 +13,7 @@ main (void)
 	int n;
 	float xn, xv, xt; /* xn es l'ultim valor; xv es el vell */
 	double dn, dv, dt; /* xn es l'ultim valor; xv es el vell */
-	double z;
+	double z, errorV, errorN;
 	z = 1 - sqrt (3);
 
 	xv = 1;

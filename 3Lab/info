@@ -1,0 +1,36 @@
+x_1 = 1
+x_2 = 1 - \sqrt{3}
+x_n = 2(x_{n-1} + x_{n-2}) \forall n \ge 3
+
+Solució "exacta": x_n = (1 - \sqrt{3})^{n-1} \equiv z
+Solució aproximada usant la recurrència
+
+Escriure
+n	z	x	x-z	(x-z)/z
+2
+3
+
+
+50
+
+
+x_n = \alpha (1 + \sqrt{3})^n + \beta (1 - \sqrt{3})^n
+
+\alpha => 0
+\beta => \frac{1}{1 - \sqrt{3}}
+
+el gran error prove que la maquina fa que \alpha no sigui zero
+
+
+
+mandreta ara per ara
+-> x-z d'un a l'altre la diferencia hauria de ser de 1 + \sqrt{3}
+
+
+
+
+
+Exercici a casa
+Buscar
+x_1 = 1, x_2 = 3
+x_n = 3 x_{n-1} - x_{n-2}

@@ -20,9 +20,15 @@ double norma (int n, **a)
 return norm;
 }
 
-double palu (int n, double **A, int *p)
+/*
+PA = LU,
+retorna P, LU
+*/
+double lupp (int n, double **A, int *p)
 {
 /* DBL_EPSILON presicio del pc */
+	double *vaux	/* vector auxiliar */
+	double m;	/* multiple Gauuss */
 	double det;	/* l'enunciat el demana */
 	double tpM;	/* usat per buscar el maxim */
 	double tol;	/* Tolerancia que farem anar */
@@ -42,33 +48,47 @@ double palu (int n, double **A, int *p)
 
 
 /****** Eliminacio gaussiana amb permutacions ********/
-	for (i = 0; i < n; i++)
+	for (k = 0; k < n -1; k++)
 	{
 /* Cerquem l'element mes gran */
 		iM = 0;
-		tpM = a[i][i];
-		for (j = i+1; j < n; j++)
+		m = fabs(a[k][k]);
+		for (i = k+1; k < n; i++) /* +1, ja que no volem tornar a buscar el mes gran */
 		{
-			if (tpM < a[j][i])
+			tpM = fabs (a[i][k]);
+			if (m < tpM)
 			{
-				iM = j;
-				tpM = a[j][i];
+				iM = i;
+				m = tpM;
 			}
 		}
 /* Ens assegurem que el resultat esta dins de la tolerancia */
-		if (tol > fabs (tpM)){ printf ("tolerancia\n"); exit (1);
-		vaux = a[iM];
-		a[iM] = a[i];
-		a[i] = vaux;
-		det *= tpM;
-		if (iM)/* em efectuat un canvi */
+		if (tol > fabs (m)) { printf ("tolerancia\n"); exit (1); }
+		if (iM)/* efectuem un canvi  'Permutacio' */
 		{
 			det *= -1;
+
+			/* matriu */
+			vaux = a[iM];
+			a[iM] = a[k];
+			a[k] = vaux;
+
+			/* vector de permutacio */
+			i = p[iM];
+			p[iM] = p[k];
+			p[k] = i;
 		}
+		tpM = a[k][k];
+		det *= tpM;
 
 /* Ara tocaria la eliminacio gaussiana */
-
+		for (i = k+1; k < n; k++)
+		{
+			m = a[i][k]/tpM;
+			a[i][k] = m;
+			for (j = k+1; j < n; j++)
+				a[i][j] -= m * a[k][j];
+		}
 	}
-
 return det; /* es el que demana l'enunciat */
 }

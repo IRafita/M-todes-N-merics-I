@@ -1,5 +1,41 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+
+/* La funcio sobreescriu els valors de f, escriu alla la solucio */
+/* Representa que els punts x son estrictament creixents */
+void divdif ( n, x, f )
+	int n; /* nombre d'elements de x i f */
+	double *x; /* els punts calculats */
+	double *f; /* els resultats dels punts */
+{
+	int k, j;
+
+	for ( k = 1; k < n; k++ )
+		for ( j = n -1; j >= k; j-- )
+/* important aquest j = n-1, ja que sino entres fora del vector */
+			f[j] = ( f[j] - f[j -1] ) / ( x[j] - x[j - k] );
+}
+
+/* Reciclat */
+
+/* p(z) = b[0] + b[1] (z - x[0]) + b[2] (z - x[0])(z - x[1])... */
+double horner ( n, b, x, z )
+	int n; /* valor d'elements que hi ha en b i x */
+	double *b; /* coheficients */
+	double *x; /* encara no ho pillo gaire */
+	double z;
+{
+	int i;
+	double s;
+
+	s = b[n -1];
+	for ( i = n -2; i >= 0; i-- )
+		s = s * ( z - x[i] ) + b[i];
+return out;
+}
+
+/* tot 4 */
 
 /* Show Matrix */
 void SM (int n, double **a)
@@ -127,4 +163,46 @@ void SloveLUx_b (int n, double **a, double *b)
 {
 	SloveLy_b (n, a, b);
 	SloveUx_y (n, a, b);
+}
+
+int main ()
+{
+/* per la funcio principal */
+	int n, i;
+	double *x, *f;
+
+/* per printejar */
+	double a, b, h, elements;
+	double x0;
+	FILE *F;
+
+	scanf ( "%d", &n );
+
+	x = GV ( n );
+	f = GV ( n );
+
+	for ( i = 0; i < n; i++ )
+	{
+		scanf ( "%lf", &x[i] );
+		scanf ( "%lf", &f[i] );
+	}
+
+/* Ja comenzem a fer coses */
+	divdif ( n, x, f );
+
+/* Ara faltaria fer el print */
+	a = -2;
+	b = 6;
+
+	elements = 10000;
+
+	F = fopen ( "out", "w" );
+
+	h = ( b - a ) / elements;
+	for ( x0 = a; x0 <= b; x0 += h )
+		fprintf ( F, "%f %f\n", x0, horner ( n, f, x, x0 ) );
+
+free ( x );
+free ( f );
+return 0;
 }

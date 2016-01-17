@@ -26,11 +26,13 @@ double trap ( n, h, integral, a, f )
 	double f (double); /* la funcio que volem integrar */
 {
 	int i;
+	double sol;
 
 	integral /= 2*h; /* Treiem els valors no necessaris */
+	sol = 0;
 	for ( i = 1; i < n; i+= 2 ) /* tots els parells, ja estan del resultat anterior */
-		integral += f ( a + h*i );
-return integral * h; /* obtenim el resultat final desitjat */
+		sol += f ( a + h*i );
+return ( integral + sol ) * h; /* obtenim el resultat final desitjat */
 }
 
 /* Sistema per anar directament on se vol */
@@ -103,14 +105,15 @@ double extrapolacio ( a, b, max, pre, f )
 	int i, j;
 	double exT; /* exponent temporal 4^j */
 
-	t = GV ( max );
+	t = GV ( max + 1 );
 	dif = pre * 2;
 	n = 1;
 	h = b - a;
 	t[0] = h * ( f ( a ) + f ( b ) ) / 2;
 
-	for ( i = 0; ((i+1) < max) && (pre < dif); i++ )
+	for ( i = 0; (i < max) && (pre < dif); i++ )
 	{
+/*printf ( "EX: %lf\n", t[0] );*/
 		n *= 2;
 		h /= 2;
 
@@ -128,9 +131,9 @@ double extrapolacio ( a, b, max, pre, f )
 	}
 
 	printf ( "extrapolacio %d\n", i );
-
+dif = t[0];
 free ( t );
-return t[0];
+return dif;
 }
 
 double x2001 ( x ) double x; { return x*x*x + 7*x; }
@@ -153,10 +156,10 @@ main ( void )
 	while ( n != -1)
 	{
 		t = trapezis ( a, b, n, pre, x2 );
-		printf ("%f\n", t);
+		printf ("%lf\n", t);
 
 		t = extrapolacio ( a, b, n, pre, x2 );
-		printf ("%f\n", t);
+		printf ("%lf\n", t);
 
 		scanf ("%d", &n);
 	}

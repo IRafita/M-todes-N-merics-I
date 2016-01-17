@@ -53,7 +53,7 @@ double lupp (int n, double **A, int *p)
 /* Cerquem l'element mes gran */
 		iM = 0;
 		m = fabs(a[k][k]);
-		for (i = k+1; k < n; i++) /* +1, ja que no volem tornar a buscar el mes gran */
+		for (i = k+1; i < n; i++) /* +1, ja que no volem tornar a buscar el mes gran */
 		{
 			tpM = fabs (a[i][k]);
 			if (m < tpM)

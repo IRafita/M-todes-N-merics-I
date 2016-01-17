@@ -44,8 +44,6 @@ void divdif ( n, x, f )
 			f[j] = ( f[j] - f[j -1] ) / ( x[j] - x[j - i] );
 }
 
-/* Reciclat */
-
 /* p(z) = b[2] + b[1] (z - x[0]) + b[2] (z - x[0])(z - x[1])... */
 double horner ( n, b, x, z )
 	int n; /* valor d'elements que hi ha en b i x */
